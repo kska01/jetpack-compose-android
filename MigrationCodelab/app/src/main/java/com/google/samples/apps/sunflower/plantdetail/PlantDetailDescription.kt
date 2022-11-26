@@ -45,8 +45,10 @@ import com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel
 
 @Composable
 fun PlantDetailDescription(plantDetailViewModel: PlantDetailViewModel) {
+    // observes values coming from the VM's LiveData<Plant> field
     val plant by plantDetailViewModel.plant.observeAsState()
 
+    // If plant is not null, display the content
     plant?.let {
         PlantDetailContent(it)
     }
@@ -58,6 +60,7 @@ fun PlantDetailContent(plant: Plant) {
         Column(Modifier.padding(dimensionResource(id = R.dimen.margin_normal))) {
             PlantName(name = plant.name)
             PlantWatering(wateringInterval = plant.wateringInterval)
+            PlantDescription(description = plant.description)
         }
     }
 }
@@ -127,10 +130,10 @@ private fun PlantDescription(description: String) {
 
 @Preview
 @Composable
-fun PlantDetailContentPreview() {
+private fun PlantDetailContentPreview() {
     val plant = Plant(
         "id", "Apple",
-        "description", 3, 30, ""
+        "HTML<br><br>description", 3, 30, ""
     )
     MaterialTheme {
         PlantDetailContent(plant = plant)
